@@ -1,0 +1,6 @@
+#http://localhost:8080/h2-console To access H2
+#Change db source url to 'jdbc:h2:mem:testdb' in h2 console if you're facing issue loggin in
+
+
+#http://localhost:8080/spring-security-rest/api/v2/api-docs swagger
+#http://localhost:8080/your-app-root/swagger-ui/
