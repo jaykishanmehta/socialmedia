@@ -22,8 +22,14 @@ import com.cs.sample.socialmedia.service.FollowerService;
 import com.cs.sample.socialmedia.service.PostService;
 import com.cs.sample.socialmedia.service.UsersService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 @RestController
 @RequestMapping(path = "/useractivity")
+@Api(value="useractivites", description="Operations pertaining to users in social media app")
 public class UserActivityController {
 	
 	@Autowired
@@ -35,23 +41,31 @@ public class UserActivityController {
 	@Autowired
 	FollowerService followerService;
 	
+	@ApiOperation(value = "Get all the users",response = Iterable.class)
 	@GetMapping("/users")
 	public Iterable<User> read() {
 		return usersService.getAllUsers();
 	}
 	
+	@ApiOperation(value = "Create new user",response = User.class)
 	@PostMapping("/newUser")
 	@ResponseStatus(code = HttpStatus.ACCEPTED)
     User createNewUser(@RequestBody User newUser) {
         return usersService.create(newUser);
     }
 	
+	@ApiOperation(value = "Create new post",response = Post.class)
 	@PostMapping("/newPost")
 	@ResponseStatus(code = HttpStatus.ACCEPTED)
 	Post createNewPost(@RequestBody Post newPost) {
         return postService.create(newPost);
     }
 	
+	@ApiOperation(value = "Follow user",response = ResponseEntity.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Started following ..."),
+            @ApiResponse(code = 208, message = "Already following to this user")
+    })
 	@PostMapping("/newFollower")
 	ResponseEntity<String> createNewFollower(@RequestBody Follower newFollower) {
 		if(followerService.isFollowerExist(newFollower)) {
@@ -62,16 +76,26 @@ public class UserActivityController {
 		return new ResponseEntity<String>("Started following " + newFollower.getFollowingId(), HttpStatus.OK);
     }
 	
+	@ApiOperation(value = "UnFollow user",response = ResponseEntity.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Success"),
+            @ApiResponse(code = 400, message = "Already not following to this user")
+    })
 	@DeleteMapping("/unfollow")
 	ResponseEntity<String> unfollowUser(@RequestBody Follower follower) {
 		if(!followerService.isFollowerExist(follower)) {
-			return new ResponseEntity<String>("Already not following to this user", HttpStatus.ALREADY_REPORTED);
+			return new ResponseEntity<String>("Already not following to this user", HttpStatus.BAD_REQUEST);
 		}
 		
 		followerService.remove(follower);
 		return new ResponseEntity<String>("Success", HttpStatus.OK);
     }
 	
+	@ApiOperation(value = "Generate users landing page contains all required information related to user",response = ResponseEntity.class)
+	@ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Success"),
+            @ApiResponse(code = 400, message = "User does not exist")
+    })
 	@GetMapping("/userfeed/{id}")
 	public ResponseEntity<?> generateFeed(@PathVariable Integer id) {
 		User user = usersService.getUserById(id);
