@@ -27,6 +27,12 @@ public class Post {
 		this.content = content;
 	}
 	
+	public Post(int userId, String content) {
+		super();
+		this.userId = userId;
+		this.content = content;
+	}
+
 	public int getId() {
 		return id;
 	}

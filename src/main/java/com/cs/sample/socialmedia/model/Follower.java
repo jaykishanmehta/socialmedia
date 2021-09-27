@@ -16,6 +16,22 @@ public class Follower {
 	private int userId;
 	private int followingId;
 	
+	public Follower() {
+	}
+	
+	public Follower(int id, int userId, int followingId) {
+		super();
+		this.id = id;
+		this.userId = userId;
+		this.followingId = followingId;
+	}
+
+	public Follower(int userId, int followingId) {
+		super();
+		this.userId = userId;
+		this.followingId = followingId;
+	}
+
 	public int getId() {
 		return id;
 	}
