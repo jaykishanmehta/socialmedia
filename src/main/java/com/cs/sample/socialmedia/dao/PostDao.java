@@ -1,7 +1,7 @@
 package com.cs.sample.socialmedia.dao;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -12,8 +12,11 @@ public interface PostDao extends CrudRepository<Post, Integer> {
 
 	Iterable<Post> findByUserIdOrderByIdDesc(int userId);
 
-//	@Query("select " 
-//			+ "new com.cs.sample.socialmedia.model.Post(p.id, p.user_id, p.content)" +" from posts p where user_id in (select following_id from followers where user_id = :id) order by p.id desc") 
-//	List<Post> findUserFeeds(@Param("id") Integer id);
+	@Query(value = "select * from posts p " 
+			+ "where user_id in (select following_id from followers where user_id = :id) or user_id = :id "
+			, countQuery  = "select COUNT(*) from posts p " 
+					+ "where user_id in (select following_id from followers where user_id = :id) or user_id = :id "
+			, nativeQuery=true) 
+	Page<Post> findUserFeeds(@Param("id") Integer id, Pageable of);
 
 }

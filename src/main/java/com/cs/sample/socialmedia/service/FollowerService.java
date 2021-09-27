@@ -1,7 +1,6 @@
 package com.cs.sample.socialmedia.service;
 
 import com.cs.sample.socialmedia.model.Follower;
-import com.cs.sample.socialmedia.model.User;
 
 public interface FollowerService {
 	
@@ -10,4 +9,6 @@ public interface FollowerService {
 	Follower create(Follower newFollower);
 
 	boolean isFollowerExist(Follower newFollower);
+
+	void remove(Follower follower);
 }

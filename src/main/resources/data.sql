@@ -9,7 +9,12 @@ CREATE TABLE USERS (
 INSERT INTO USERS (first_name, last_name) VALUES
   ('Aliko', 'Dangote'),
   ('Bill', 'Gates'),
-  ('Folrunsho', 'Alakija');
+  ('Folrunsho', 'Alakija'),
+  ('Mukesh', 'Ambani'),
+  ('Gautam', 'Adani'),
+  ('Shiv', 'Nadar'),
+  ('Lakshmi', 'Mittal'),
+  ('Savitri', 'Jindal');
 
 DROP TABLE IF EXISTS POSTS;
   
@@ -27,8 +32,15 @@ INSERT INTO POSTS (id, user_id, content) VALUES
   (4, 1, 'Aliko Post 2'),
   (5, 2, 'Bill Post 2'),
   (6, 3, 'Folrunsho Post 2'),
-  (7, 2, 'Bill Post 3'),
-  (8, 2, 'Bill Post 4');
+  (7, 4, 'Ambani Post 2'),
+  (8, 8, 'Jindal Post 1'),
+  (9, 4, 'Ambani Post 3'),
+  (10, 1, 'Aliko Post 3'),
+  (11, 7, 'Mittal Post 1'),
+  (12, 6, 'Nadar Post 1'),
+  (13, 3, 'Folrunsho Post 3'),
+  (14, 5, 'Adani Post 1'),
+  (15, 7, 'Mittal Post 2');
 
   
 
@@ -40,7 +52,15 @@ CREATE TABLE FOLLOWERS (
   following_id INT NOT NULL
 );
 
-INSERT INTO FOLLOWERS (id, user_id, following_id) VALUES
-  (1, 1, 2),
-  (2, 2, 3),
-  (3, 3, 1);
+INSERT INTO FOLLOWERS (user_id, following_id) VALUES
+  (1, 2),
+  (2, 3),
+  (3, 1),
+  (2, 1),
+  (5, 4),
+  (6, 4),
+  (4, 1),
+  (7, 3),
+  (8, 1),
+  (4, 2),
+  (2, 4);

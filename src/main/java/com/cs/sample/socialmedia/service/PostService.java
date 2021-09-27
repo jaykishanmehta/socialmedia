@@ -1,6 +1,6 @@
 package com.cs.sample.socialmedia.service;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 import com.cs.sample.socialmedia.model.Post;
 
@@ -9,5 +9,5 @@ public interface PostService {
 
 	Post create(Post newPost);
 
-	List<Post> getUserFeed(Integer id);
+	Page<Post> getUserFeed(Integer id);
 }

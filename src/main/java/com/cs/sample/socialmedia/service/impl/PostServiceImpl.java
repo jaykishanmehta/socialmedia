@@ -1,8 +1,10 @@
 package com.cs.sample.socialmedia.service.impl;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.cs.sample.socialmedia.dao.PostDao;
@@ -15,6 +17,9 @@ public class PostServiceImpl implements PostService {
 	@Autowired
 	PostDao postDas;
 	
+	@Value( "${user.feed.limit}" )
+	private Integer feedLimit;
+	
 	@Override
 	public Iterable<Post> getAllPosts(int userId) {
 		return postDas.findByUserIdOrderByIdDesc(userId);
@@ -26,9 +31,8 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
-	public List<Post> getUserFeed(Integer id) {
-//		return postDas.findUserFeeds(id);
-		return null;
+	public Page<Post> getUserFeed(Integer id) {
+		return postDas.findUserFeeds(id, PageRequest.of(0, feedLimit, Sort.by("id").descending()));
 	}
 	
 }

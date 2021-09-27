@@ -34,4 +34,9 @@ public class FollowerServiceImpl implements FollowerService {
 		return false;
 	}
 
+	@Override
+	public void remove(Follower follower) {
+		followerDas.deleteByUserIdAndFollowingId(follower.getUserId(), follower.getFollowingId());
+	}
+
 }

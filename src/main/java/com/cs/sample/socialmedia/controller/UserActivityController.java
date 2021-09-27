@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cs.sample.socialmedia.model.Follower;
 import com.cs.sample.socialmedia.model.Post;
 import com.cs.sample.socialmedia.model.User;
-import com.cs.sample.socialmedia.model.UserFeedVO;
 import com.cs.sample.socialmedia.service.FollowerService;
 import com.cs.sample.socialmedia.service.PostService;
 import com.cs.sample.socialmedia.service.UsersService;
@@ -60,6 +60,16 @@ public class UserActivityController {
 		
 		followerService.create(newFollower);
 		return new ResponseEntity<String>("Started following " + newFollower.getFollowingId(), HttpStatus.OK);
+    }
+	
+	@DeleteMapping("/unfollow")
+	ResponseEntity<String> unfollowUser(@RequestBody Follower follower) {
+		if(!followerService.isFollowerExist(follower)) {
+			return new ResponseEntity<String>("Already not following to this user", HttpStatus.ALREADY_REPORTED);
+		}
+		
+		followerService.remove(follower);
+		return new ResponseEntity<String>("Success", HttpStatus.OK);
     }
 	
 	@GetMapping("/userfeed/{id}")

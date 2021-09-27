@@ -10,4 +10,6 @@ public interface FollowerDao extends CrudRepository<Follower, Integer> {
 
 	Iterable<Follower> findByUserIdAndFollowingId(int userId, int followingId);
 
+	void deleteByUserIdAndFollowingId(int userId, int followingId);
+
 }
